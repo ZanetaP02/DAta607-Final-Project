@@ -12,236 +12,97 @@ library(ggplot2)
 library(usmap)
 ```
 
-
+### Introduction: 
 We will examine the relationship between the number of drivers and the incidence of fatal accidents in the USA. Our focus will be on fatality data from the National Highway Traffic Safety Administration and driving population statistics from the Federal Highway Administration for the years 2018, 2020, and 2022. Our analysis will investigate whether the number of fatalities increases as the driving population grows. I believe that an increase in the number of drivers is likely to lead to an increase in the number of fatalities as well.
 
-Data Source:
-data of fatal accidents per state – https://www-fars.nhtsa.dot.gov/states/statesfatalitiesfatalityrates.aspx
+### Data Source 
+Data of fatal accidents per state 
+ - https://www-fars.nhtsa.dot.gov/states/statesfatalitiesfatalityrates.aspx
 
-population of drivers per state:
-2022 - https://www.fhwa.dot.gov/policyinformation/statistics/2022/dl1c.cfm
-2020 - https://www.fhwa.dot.gov/policyinformation/statistics/2020/dl1c.cfm
-2018 - https://www.fhwa.dot.gov/policyinformation/statistics/2018/dl1c.cfm
+Population of drivers per state:
+ - 2022 - https://www.fhwa.dot.gov/policyinformation/statistics/2022/dl1c.cfm
+ - 2020 - https://www.fhwa.dot.gov/policyinformation/statistics/2020/dl1c.cfm
+ - 2018 - https://www.fhwa.dot.gov/policyinformation/statistics/2018/dl1c.cfm
 
+### Fatality Data
 
-#Data Source 
-
-###Fatality Data
 ```{r}
 Fatality_data <- read.csv("https://raw.githubusercontent.com/ZanetaP02/DAta607-Final-Project/refs/heads/main/Fatalities%20and%20Fatality%20Rates%20by%20STATE%2C%201994%20-%202022%20-%20State%20USA.csv")
+Fatality_data <- Fatality_data[, c("State", "X2018", "X2020", "X2022")]
+names(Fatality_data) <- c("State", "Y18", "Y20", "Y22")
+Fatality_data <- Fatality_data[-c(52), ]
 head(Fatality_data)
 ```
-```{r}
-colnames(Fatality_data)
-```
 
-###Diving Population for Year 2022
-```{r}
+### Driving Population for Year 2022
+
+``` {r}
 data_2022 <- read.csv("https://raw.githubusercontent.com/ZanetaP02/DAta607-Final-Project/refs/heads/main/Licensed%20Drivers%20by%20Sex%20and%20Ratio%20to%20Population%20-%202022.csv")
+names(data_2022) <- c("State", "Male_Drivers_Y22", "Male_Driver_%_Y22", "Female_Driver_Y22", "Female_Driver_%_Y22", "Total_Drivers_Y22", "Commercial_Motor_Vehicles_Registered_Y22", "Population_Resident_Y22", "Population_Male_Y22", "Population_Female_Y22", "Population_Total_Y22", "Drivers_Per_1K_Total_Resident_Polulation_Y22", "Drivers_Per_1K_Age_Population_Y22")
+data_2022 <- data_2022[-c(1,2,3,4,5,57,58,59,60,61,62,63,64), ]
 head(data_2022)
 ```
 
+### Driving Population for Year 2020
 
-```{r}
-colnames(data_2022)
-```
-
-###Adding a description for each column.
-```{r}
-d_22<-data_2022
-names(d_22)[1]="State"
-names(d_22)[2]="Male_Drivers_Y22"
-names(d_22)[3]="Male_Driver_%_Y22"
-names(d_22)[4]="Female_Driver_Y22"
-names(d_22)[5]="Female_Driver_%_Y22"
-names(d_22)[6]="Total_Drivers_Y22"
-names(d_22)[7]="Commercial_Motor_Vehicles_Registered_Y22"
-names(d_22)[8]="Population_Resident_Y22"
-names(d_22)[9]="Population_Male_Y22"
-names(d_22)[10]="Population_Female_Y22"
-names(d_22)[11]="Population_Total_Y22"
-names(d_22)[12]="Drivers_Per_1K_Total_Resident_Polulation_Y22"
-names(d_22)[13]="Drivers_Per_1K_Age_Population_Y22"
-colnames(d_22)
-```
-
-```{r}
-d_22
-```
-
-###Taking out blank and not data related information rows
-```{r}
-d22<-d_22[-c(1,2,3,4,5,57,58,59,60,61,62,63,64), ] 
-d22
-```
-
-###Diving Population for Year 2020
-```{r}
+``` {r}
 data_2020 <- read.csv("https://raw.githubusercontent.com/ZanetaP02/DAta607-Final-Project/refs/heads/main/Licensed%20Drivers%20by%20Sex%20and%20Ratio%20to%20Population%20-%202020.csv")
+names(data_2020) <- c("State", "Male_Drivers_Y20", "Male_Driver_%_Y20", "Female_Driver_Y20", "Female_Driver_%_Y20", "Total_Drivers_Y20", "Commercial_Motor_Vehicles_Registered_Y20", "Population_Resident_Y20", "Population_Male_Y20", "Population_Female_Y20", "Population_Total_Y20", "Drivers_Per_1K_Total_Resident_Polulation_Y20", "Drivers_Per_1K_Age_Population_Y20")
+data_2020 <- data_2020[-c(1,2,3,4,5,6,58,59,60,61,62,63,64), ]
 head(data_2020)
 ```
 
-```{r}
-colnames(data_2020)
-```
+### Driving Population for Year 2018
 
-###Adding a description for each column.
-```{r}
-d_20<-data_2020
-names(d_20)[1]="State"
-names(d_20)[2]="Male_Drivers_Y20"
-names(d_20)[3]="Male_Driver_%_Y20"
-names(d_20)[4]="Female_Driver_Y20"
-names(d_20)[5]="Female_Driver_%_Y20"
-names(d_20)[6]="Total_Drivers_Y20"
-names(d_20)[7]="Commercial_Motor_Vehicles_Registered_Y20"
-names(d_20)[8]="Population_Resident_Y20"
-names(d_20)[9]="Population_Male_Y20"
-names(d_20)[10]="Population_Female_Y20"
-names(d_20)[11]="Population_Total_Y20"
-names(d_20)[12]="Drivers_Per_1K_Total_Resident_Polulation_Y20"
-names(d_20)[13]="Drivers_Per_1K_Age_Population_Y20"
-colnames(d_20)
-```
-```{r}
-d_20
-```
-
-###Taking out blank and not data related information rows
-```{r}
-d20<-d_20[-c(1,2,3,4,5,6,58,59,60,61,62,63,64), ] 
-d20
-```
-
-###Diving Population for Year 2018
-```{r}
+``` {r}
 data_2018 <- read.csv("https://raw.githubusercontent.com/ZanetaP02/DAta607-Final-Project/refs/heads/main/Licensed%20Drivers%20by%20Sex%20and%20Ratio%20to%20Population%20-%202018.csv")
+names(data_2018) <- c("State", "Male_Drivers_Y18", "Male_Driver_%_Y18", "Female_Driver_Y18", "Female_Driver_%_Y18", "Total_Drivers_Y18", "Commercial_Motor_Vehicles_Registered_Y18", "Population_Resident_Y18", "Population_Male_Y18", "Population_Female_Y18", "Population_Total_Y18", "Drivers_Per_1K_Total_Resident_Polulation_Y18", "Drivers_Per_1K_Age_Population_Y18")
+data_2018 <- data_2018[-c(1,2,3,4,5,6,58,59,60), ]
 head(data_2018)
 ```
-```{r}
-colnames(data_2018)
-```
-###Adding a description for each column.
-```{r}
-d_18<-data_2018
-names(d_18)[1]="State"
-names(d_18)[2]="Male_Drivers_Y18"
-names(d_18)[3]="Male_Driver_%_Y18"
-names(d_18)[4]="Female_Driver_Y18"
-names(d_18)[5]="Female_Driver_%_Y18"
-names(d_18)[6]="Total_Drivers_Y18"
-names(d_18)[7]="Commercial_Motor_Vehicles_Registered_Y18"
-names(d_18)[8]="Population_Resident_Y18"
-names(d_18)[9]="Population_Male_Y18"
-names(d_18)[10]="Population_Female_Y18"
-names(d_18)[11]="Population_Total_Y18"
-names(d_18)[12]="Drivers_Per_1K_Total_Resident_Polulation_Y18"
-names(d_18)[13]="Drivers_Per_1K_Age_Population_Y18"
-colnames(d_18)
-```
-```{r}
-d_18
-```
 
-###Taking out blank and not data related information rows
-```{r}
-d18<-d_18[-c(1,2,3,4,5,6,58,59,60), ] 
-d18
-```
+### Merging and Cleaning Data
 
+``` {r}
+df22 <- data_2022[, c("State", "Male_Drivers_Y22", "Female_Driver_Y22", "Total_Drivers_Y22", "Population_Resident_Y22")]
+df20 <- data_2020[, c("State", "Male_Drivers_Y20", "Female_Driver_Y20", "Total_Drivers_Y20", "Population_Resident_Y20")]
+df18 <- data_2018[, c("State", "Male_Drivers_Y18", "Female_Driver_Y18", "Total_Drivers_Y18", "Population_Resident_Y18")]
 
-##Edit Data Source
+pop_d <- merge(df22, df20, by = "State", all = TRUE)
+pop_drive <- merge(pop_d, df18, by = "State", all = TRUE)
 
-We are only looking for fatality data from the years 2018, 2020, and 2022, so we need a table that includes information for those years and the states.
-```{r}
-fatal_data <-Fatality_data[,c("State","X2018","X2020", "X2022")]
-fatal_data
-```
-
-###Updating a description for column.
-```{r}
-f_d<-fatal_data
-names(f_d)[1]="State"
-names(f_d)[2]="Y18"
-names(f_d)[3]="Y20"
-names(f_d)[4]="Y22"
-f_d
-```
-
-```{r}
-colnames(f_d)
-```
-###Taking out blank and not data related information rows
-```{r}
-f_d1<-f_d[-c(52), ] 
-f_d1
-```
-###Editing only particle colums in thw 2018, 2020, and 2022 data
-```{r}
-df22<-d22[,c("State","Male_Drivers_Y22","Female_Driver_Y22", "Total_Drivers_Y22","Population_Resident_Y22")]
-df22
-```
-
-
-
-rownames(df22)
-```{r}
-df20 <-d20[,c("State","Male_Drivers_Y20","Female_Driver_Y20", "Total_Drivers_Y20","Population_Resident_Y20")]
-df20
-```
-```{r}
-df18 <-d18[,c("State","Male_Drivers_Y18","Female_Driver_Y18", "Total_Drivers_Y18","Population_Resident_Y18")]
-df18
-```
-
-
-
-
-#Graph of Fatalities
-
-###Moving the years in to one column
-```{r}
-fd <- f_d1%>%
-  pivot_longer(cols = c('Y18', 'Y20', 'Y22'), names_to = "Years", values_to = "Fatalities_Rate")
-fd
-```
-
-```{r}
-ggplot((data = fd), aes(x = State, y = Fatalities_Rate, fill = Years)) + geom_col(position = position_dodge())+ggtitle("Fetalities Rate for Years 2018, 2020, & 2022") +
-theme(axis.text.x = element_text(angle = 66, hjust = 1))
-```
-
-```{r}
-pop_d <-merge(df22, df20,by="State", all = TRUE)
-pop_d
-```
-
-```{r}
-pop_drive <-merge(pop_d, df18,by="State", all = TRUE)
-pop_drive
-```
-
-
-```{r}
-pop_driver <- pop_drive%>%
+pop_driver <- pop_drive %>%
   pivot_longer(cols = c('Total_Drivers_Y22', 'Total_Drivers_Y20', 'Total_Drivers_Y18'), names_to = "Total_Drivers_Per_Years", values_to = "Drivers_Population")
-pop_driver
-```
 
-```{r}
-drivers_pop <-pop_driver[,c("State","Total_Drivers_Per_Years","Drivers_Population")]
-drivers_pop
-```
-
-
-```{r}
+drivers_pop <- pop_driver[, c("State", "Total_Drivers_Per_Years", "Drivers_Population")]
 dp <- na.omit(drivers_pop)
-dp
+head(dp)
 ```
 
+### Descriptive Statistics
 
-```{r}
-ggplot((data = dp), aes(x = State, y = Drivers_Population, fill = Total_Drivers_Per_Years)) + geom_col(position = position_dodge())+ggtitle("Drivers Population for the Years 2018, 2020, & 2022") +
-theme(axis.text.x = element_text(angle = 66, hjust = 1))
+``` {r}
+summary(dp)
+```
+
+### Graph of Fatalities
+
+``` {r}
+fd <- Fatality_data %>%
+  pivot_longer(cols = c('Y18', 'Y20', 'Y22'), names_to = "Years", values_to = "Fatalities_Rate")
+
+ggplot((data = fd), aes(x = State, y = Fatalities_Rate, fill = Years)) + 
+  geom_col(position = position_dodge()) + 
+  ggtitle("Fatalities Rate for Years 2018, 2020, & 2022") +
+  theme(axis.text.x = element_text(angle = 66, hjust = 1))
+```
+
+### Graph of Drivers Population
+
+``` {r}
+ggplot((data = dp), aes(x = State, y = Drivers_Population, fill = Total_Drivers_Per_Years)) + 
+  geom_col(position = position_dodge()) + 
+  ggtitle("Drivers Population for the Years 2018, 2020, & 2022") +
+  theme(axis.text.x = element_text(angle = 66, hjust = 1))
 ```
 
