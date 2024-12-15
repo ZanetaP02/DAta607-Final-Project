@@ -183,10 +183,19 @@ head(dpop)
 ```
 
 ```{r}
-ggplot((data = dpop), aes(x = State, y = Drivers_Population, fill = Total_Drivers_Per_Years)) + 
+dp <- df_pop %>%
+  pivot_longer(cols = c('Total_Drivers_Y22', 'Total_Drivers_Y20', 'Total_Drivers_Y18'), names_to = "Total_Drivers_Per_Years", values_to = "Drivers_Population") %>%
+  mutate(Total_Drivers_Per_Years = recode(Total_Drivers_Per_Years,
+                                          "Total_Drivers_Y22" = "2022",
+                                          "Total_Drivers_Y20" = "2020",
+                                          "Total_Drivers_Y18" = "2018"),
+         Drivers_Population = as.numeric(gsub("[^0-9]", "", Drivers_Population)))
+
+ggplot(data = dp, aes(x = State, y = Drivers_Population, fill = Total_Drivers_Per_Years)) + 
   geom_col(position = position_dodge()) + 
-  ggtitle("Drivers Population for the Years 2018, 2020, & 2022") +
-  theme(axis.text.x = element_text(angle = 66, hjust = 1))
+  ggtitle("Graph of Drivers Population") +
+  theme(axis.text.x = element_text(angle = 66, hjust = 1)) +
+  labs(y = "Drivers Population")
 ```
 
 This is a bar graph showing "Drivers Population for the Years 2018, 2020, & 2022" across different U.S. states. Here are the key observations:
@@ -196,5 +205,55 @@ Key Observations:
  - The smallest populations appear to be less than 1 million drivers
  - Most states fall in the range of 2-8 million drivers
  
+ 
+## Conclusion 
+
+Let's see which year has the most fatalities: 
+
+``` {r}
+total_population_by_year <- dp %>%
+  group_by(Total_Drivers_Per_Years) %>%
+  summarise(Total_Drivers = sum(Drivers_Population, na.rm = TRUE))
+total_population_by_year
+
+year_with_most_fatalities <- total_population_by_year %>%
+  filter(Total_Drivers == max(Total_Drivers)) %>%
+  pull(Total_Drivers_Per_Years)
+
+year_with_least_fatalities <- total_population_by_year %>%
+  filter(Total_Drivers == min(Total_Drivers)) %>%
+  pull(Total_Drivers_Per_Years)
+
+print(paste("The year with the most fatalities is", year_with_most_fatalities))
+print(paste("The year with the least fatalities is", year_with_least_fatalities))
+```
+
+State the null hypothesis and perform t-tests:
+Null hypothesis: COVID time 2020 has fewer fatalities than after COVID 2022 and pre-COVID 2018.
+
+``` {r}
+null_hypothesis <- "COVID time 2020 has fewer fatalities than after COVID 2022 and pre-COVID 2018."
+
+fatalities_2020 <- dp %>% filter(Total_Drivers_Per_Years == "2020") %>% pull(Drivers_Population)
+fatalities_2018 <- dp %>% filter(Total_Drivers_Per_Years == "2018") %>% pull(Drivers_Population)
+fatalities_2022 <- dp %>% filter(Total_Drivers_Per_Years == "2022") %>% pull(Drivers_Population)
+
+t_test_2018_2020 <- t.test(fatalities_2018, fatalities_2020)
+t_test_2020_2022 <- t.test(fatalities_2020, fatalities_2022)
+
+print(t_test_2018_2020)
+print(t_test_2020_2022)
+
+if (t_test_2018_2020$p.value < 0.05 & t_test_2020_2022$p.value < 0.05) {
+  print("The null hypothesis is disproved. COVID time 2020 does not have fewer fatalities than after COVID 2022 and pre-COVID 2018.")
+} else {
+  print("The null hypothesis is not disproved. COVID time 2020 has fewer fatalities than after COVID 2022 and pre-COVID 2018.")
+}
+```
+
+ 
+Based on the Welch Two Sample t-tests, there is no significant difference in the mean number of fatalities between the years 2018 and 2020 (p-value = 1) or between 2020 and 2022 (p-value = 0.9). The confidence intervals for both tests include zero, indicating that the differences in means are not statistically significant.
+
+Therefore, the null hypothesis is not disproved: the COVID-19 year (2020) does not have significantly fewer fatalities compared to the pre-COVID year (2018) and the post-COVID year (2022). 
  
  
