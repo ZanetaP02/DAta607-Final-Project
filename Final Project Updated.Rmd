@@ -22,7 +22,7 @@ Data of fatal accidents per state
 
  - https://www-fars.nhtsa.dot.gov/states/statesfatalitiesfatalityrates.aspx
 
-The population of drivers per state:
+Population of drivers per state:
 
  - 2022 - https://www.fhwa.dot.gov/policyinformation/statistics/2022/dl1c.cfm
  
@@ -188,3 +188,13 @@ ggplot((data = dpop), aes(x = State, y = Drivers_Population, fill = Total_Driver
   ggtitle("Drivers Population for the Years 2018, 2020, & 2022") +
   theme(axis.text.x = element_text(angle = 66, hjust = 1))
 ```
+
+This is a bar graph showing "Drivers Population for the Years 2018, 2020, & 2022" across different U.S. states. Here are the key observations:
+
+Key Observations:
+ - The largest populations are around 27 million drivers
+ - The smallest populations appear to be less than 1 million drivers
+ - Most states fall in the range of 2-8 million drivers
+ 
+ 
+ 
