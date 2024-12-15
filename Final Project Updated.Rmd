@@ -1,0 +1,182 @@
+---
+title: "Data 607 Final Project Proposal"
+author: "Zaneta Paulusova & Inna Yedzinovich"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r}
+library(tidyverse)
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+library(usmap)
+```
+
+### Introduction: 
+We will examine the relationship between the number of drivers and the incidence of fatal accidents in the USA. Our focus will be on fatality data from the National Highway Traffic Safety Administration and driving population statistics from the Federal Highway Administration for the years 2018, 2020, and 2022. Our analysis will investigate whether the number of fatalities increases as the driving population grows. I believe that an increase in the number of drivers is likely to lead to an increase in the number of fatalities as well.
+
+### Data Source 
+Data of fatal accidents per state 
+
+ - https://www-fars.nhtsa.dot.gov/states/statesfatalitiesfatalityrates.aspx
+
+Population of drivers per state:
+
+ - 2022 - https://www.fhwa.dot.gov/policyinformation/statistics/2022/dl1c.cfm
+ 
+ - 2020 - https://www.fhwa.dot.gov/policyinformation/statistics/2020/dl1c.cfm
+ 
+ - 2018 - https://www.fhwa.dot.gov/policyinformation/statistics/2018/dl1c.cfm
+
+### Fatality Data
+
+```{r}
+Fatality_data <- read.csv("https://raw.githubusercontent.com/ZanetaP02/DAta607-Final-Project/refs/heads/main/Fatalities%20and%20Fatality%20Rates%20by%20STATE%2C%201994%20-%202022%20-%20State%20USA.csv")
+Fatality_data 
+```
+
+```{r}
+Fatalitydata <- Fatality_data[, c("State", "X2018", "X2020", "X2022")]
+names(Fatalitydata) <- c("State", "Y18", "Y20", "Y22")
+Fatalitydata <- Fatalitydata[-c(52), ]
+head(Fatalitydata)
+```
+
+
+### Driving Population for Year 2022
+
+```{r}
+data_2022 <- read.csv("https://raw.githubusercontent.com/ZanetaP02/DAta607-Final-Project/refs/heads/main/Licensed%20Drivers%20by%20Sex%20and%20Ratio%20to%20Population%20-%202022.csv")
+data_2022
+```
+
+``` {r}
+names(data_2022) <- c("State", "Male_Drivers_Y22", "Male_Driver_%_Y22", "Female_Driver_Y22", "Female_Driver_%_Y22", "Total_Drivers_Y22", "Commercial_Motor_Vehicles_Registered_Y22", "Population_Resident_Y22", "Population_Male_Y22", "Population_Female_Y22", "Population_Total_Y22", "Drivers_Per_1K_Total_Resident_Polulation_Y22", "Drivers_Per_1K_Age_Population_Y22")
+data_2022
+data22 <- data_2022[-c(1,2,3,4,5,57,58,59,60,61,62,63,64), ]
+data22
+```
+
+Remove fotenote from State
+```{r}
+data22$State[data22$State=="Alaska(2)"] <-"Alaska"
+data22$State[data22$State=="Arkansas(4)"] <-"Arkansas"
+data22$State[data22$State=="Connecticut(7)"] <-"Connecticut"
+data22$State[data22$State=="Dist. of Col.(4)"] <-"Dist. of Col."
+data22$State[data22$State=="Colorado(6)"] <-"Colorado"
+data22$State[data22$State=="Hawaii(7)"] <-"Hawaii"
+data22$State[data22$State=="Iowa(5)"] <-"Iowa"
+data22$State[data22$State=="Maryland(6)"] <-"Maryland"
+data22$State[data22$State=="Michigan(6)"] <-"Michigan"
+data22$State[data22$State=="Minnesota(6)"] <-"Minnesota"
+data22$State[data22$State=="Nevada(6)"] <-"Nevada"
+data22$State[data22$State=="New Hampshire(4)(6)"] <-"New Hampshire"
+data22$State[data22$State=="New Jersey(6)"] <-"New Jersey"
+data22$State[data22$State=="New Mexico(6)"] <-"New Mexico"
+data22$State[data22$State=="Oregon(6)"] <-"Oregon"
+data22$State[data22$State=="Vermont(6)"] <-"Vermont"
+data22$State[data22$State=="Washington(6)"] <-"Washington"
+data22$State[data22$State=="Wyoming(5)"] <-"Wyoming"
+data22
+```
+
+
+### Driving Population for Year 2020
+
+``` {r}
+data_2020 <- read.csv("https://raw.githubusercontent.com/ZanetaP02/DAta607-Final-Project/refs/heads/main/Licensed%20Drivers%20by%20Sex%20and%20Ratio%20to%20Population%20-%202020.csv")
+data_2020
+```
+
+```{r}
+names(data_2020) <- c("State", "Male_Drivers_Y20", "Male_Driver_%_Y20", "Female_Driver_Y20", "Female_Driver_%_Y20", "Total_Drivers_Y20", "Commercial_Motor_Vehicles_Registered_Y20", "Population_Resident_Y20", "Population_Male_Y20", "Population_Female_Y20", "Population_Total_Y20", "Drivers_Per_1K_Total_Resident_Polulation_Y20", "Drivers_Per_1K_Age_Population_Y20")
+data20 <- data_2020[-c(1,2,3,4,5,6,58,59,60,61,62,63,64), ]
+data20
+```
+
+```{r}
+data20$State[data20$State=="Arkansas(5)"] <-"Arkansas"
+data20$State[data20$State=="New York(5)"] <-"New York"
+data20
+```
+
+
+### Driving Population for Year 2018
+
+``` {r}
+data_2018 <- read.csv("https://raw.githubusercontent.com/ZanetaP02/DAta607-Final-Project/refs/heads/main/Licensed%20Drivers%20by%20Sex%20and%20Ratio%20to%20Population%20-%202018.csv")
+data_2018
+```
+
+```{r}
+names(data_2018) <- c("State", "Male_Drivers_Y18", "Male_Driver_%_Y18", "Female_Driver_Y18", "Female_Driver_%_Y18", "Total_Drivers_Y18", "Commercial_Motor_Vehicles_Registered_Y18", "Population_Resident_Y18", "Population_Male_Y18", "Population_Female_Y18", "Population_Total_Y18", "Drivers_Per_1K_Total_Resident_Polulation_Y18", "Drivers_Per_1K_Age_Population_Y18")
+data18 <- data_2018[-c(1,2,3,4,5,6,58,59,60), ]
+data18
+```
+
+```{r}
+data18$State[data18$State=="Alaska2/"] <-"Alaska"
+data18$State[data18$State=="Illinois2/"] <-"Illinois"
+data18
+```
+
+
+### Merging and Cleaning Data
+
+``` {r}
+df22 <- data22[, c("State", "Total_Drivers_Y22")]
+df20 <- data20[, c("State", "Total_Drivers_Y20")]
+df18 <- data18[, c("State", "Total_Drivers_Y18")]
+
+df_pop <- Reduce(merge,list(df22,df20,df18))
+df_pop
+
+```
+
+```{r}
+dp <- df_pop %>%
+  pivot_longer(cols = c('Total_Drivers_Y22', 'Total_Drivers_Y20', 'Total_Drivers_Y18'), names_to = "Total_Drivers_Per_Years", values_to = "Drivers_Population")
+dp
+```
+
+
+### Descriptive Statistics
+
+``` {r}
+summary(dp)
+```
+
+### Graph of Fatalities
+
+``` {r}
+fd <- Fatalitydata %>%
+  pivot_longer(cols = c('Y18', 'Y20', 'Y22'), names_to = "Years", values_to = "Fatalities_Rate")
+
+ggplot((data = fd), aes(x = State, y = Fatalities_Rate, fill = Years)) + 
+  geom_col(position = position_dodge()) + 
+  ggtitle("Fatalities Rate for Years 2018, 2020, & 2022") +
+  theme(axis.text.x = element_text(angle = 66, hjust = 1))
+```
+
+This graph provides a clear visual representation of fatalities rates across states and years, allowing for comparisons and analysis of trends.
+
+The graph effectively visualizes traffic fatalities across US states for 2018, 2020, and 2022, highlighting significant variations between populous states like California, Texas, and Florida compared to smaller states.
+
+Key Observations:
+ - High Fatalities States: California, Florida, and Texas consistently have the highest fatalities rates.
+ - Low Fatalities States: Vermont, Wyoming, and Rhode Island have the lowest rates.
+ - Yearly Changes: While some states show slight increases or decreases, the overall trend varies by state.
+
+### Graph of Drivers Population
+
+``` {r}
+ggplot((data = dp), aes(x = State, y = Drivers_Population, fill = Total_Drivers_Per_Years)) + 
+  geom_col(position = position_dodge()) + 
+  ggtitle("Drivers Population for the Years 2018, 2020, & 2022") +
+  theme(axis.text.x = element_text(angle = 66, hjust = 1))
+```
+
+
+
