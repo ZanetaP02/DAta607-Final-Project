@@ -44,6 +44,11 @@ Fatalitydata <- Fatalitydata[-c(52), ]
 head(Fatalitydata)
 ```
 
+```{r}
+ Fatalitydata$State[Fatalitydata$State=="District of Columbia"] <-"Dist. of Col."
+Fatalitydata
+```
+
 
 ### Driving Population for Year 2022
 
@@ -178,5 +183,15 @@ ggplot((data = dp), aes(x = State, y = Drivers_Population, fill = Total_Drivers_
   theme(axis.text.x = element_text(angle = 66, hjust = 1))
 ```
 
+```{r}
+dpop <- read.csv("https://raw.githubusercontent.com/ZanetaP02/DAta607-Final-Project/refs/heads/main/dpop.csv")
+dpop
+```
 
+```{r}
+ggplot((data = dpop), aes(x = State, y = Drivers_Population, fill = Total_Drivers_Per_Years)) + 
+  geom_col(position = position_dodge()) + 
+  ggtitle("Drivers Population for the Years 2018, 2020, & 2022") +
+  theme(axis.text.x = element_text(angle = 66, hjust = 1))
+```
 
