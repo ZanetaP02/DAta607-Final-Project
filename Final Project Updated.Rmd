@@ -22,7 +22,7 @@ Data of fatal accidents per state
 
  - https://www-fars.nhtsa.dot.gov/states/statesfatalitiesfatalityrates.aspx
 
-Population of drivers per state:
+The population of drivers per state:
 
  - 2022 - https://www.fhwa.dot.gov/policyinformation/statistics/2022/dl1c.cfm
  
@@ -65,6 +65,7 @@ data22
 ```
 
 Remove fotenote from State
+
 ```{r}
 data22$State[data22$State=="Alaska(2)"] <-"Alaska"
 data22$State[data22$State=="Arkansas(4)"] <-"Arkansas"
@@ -84,7 +85,7 @@ data22$State[data22$State=="Oregon(6)"] <-"Oregon"
 data22$State[data22$State=="Vermont(6)"] <-"Vermont"
 data22$State[data22$State=="Washington(6)"] <-"Washington"
 data22$State[data22$State=="Wyoming(5)"] <-"Wyoming"
-data22
+head(data22)
 ```
 
 
@@ -92,19 +93,19 @@ data22
 
 ``` {r}
 data_2020 <- read.csv("https://raw.githubusercontent.com/ZanetaP02/DAta607-Final-Project/refs/heads/main/Licensed%20Drivers%20by%20Sex%20and%20Ratio%20to%20Population%20-%202020.csv")
-data_2020
+head(data_2020)
 ```
 
 ```{r}
 names(data_2020) <- c("State", "Male_Drivers_Y20", "Male_Driver_%_Y20", "Female_Driver_Y20", "Female_Driver_%_Y20", "Total_Drivers_Y20", "Commercial_Motor_Vehicles_Registered_Y20", "Population_Resident_Y20", "Population_Male_Y20", "Population_Female_Y20", "Population_Total_Y20", "Drivers_Per_1K_Total_Resident_Polulation_Y20", "Drivers_Per_1K_Age_Population_Y20")
 data20 <- data_2020[-c(1,2,3,4,5,6,58,59,60,61,62,63,64), ]
-data20
+head(data20)
 ```
 
 ```{r}
 data20$State[data20$State=="Arkansas(5)"] <-"Arkansas"
 data20$State[data20$State=="New York(5)"] <-"New York"
-data20
+head(data20)
 ```
 
 
@@ -112,7 +113,7 @@ data20
 
 ``` {r}
 data_2018 <- read.csv("https://raw.githubusercontent.com/ZanetaP02/DAta607-Final-Project/refs/heads/main/Licensed%20Drivers%20by%20Sex%20and%20Ratio%20to%20Population%20-%202018.csv")
-data_2018
+head(data_2018)
 ```
 
 ```{r}
@@ -176,16 +177,9 @@ Key Observations:
 
 ### Graph of Drivers Population
 
-``` {r}
-ggplot((data = dp), aes(x = State, y = Drivers_Population, fill = Total_Drivers_Per_Years)) + 
-  geom_col(position = position_dodge()) + 
-  ggtitle("Drivers Population for the Years 2018, 2020, & 2022") +
-  theme(axis.text.x = element_text(angle = 66, hjust = 1))
-```
-
 ```{r}
 dpop <- read.csv("https://raw.githubusercontent.com/ZanetaP02/DAta607-Final-Project/refs/heads/main/dpop.csv")
-dpop
+head(dpop)
 ```
 
 ```{r}
@@ -194,4 +188,3 @@ ggplot((data = dpop), aes(x = State, y = Drivers_Population, fill = Total_Driver
   ggtitle("Drivers Population for the Years 2018, 2020, & 2022") +
   theme(axis.text.x = element_text(angle = 66, hjust = 1))
 ```
-
