@@ -11,7 +11,6 @@ library(tidyverse)
 library(tidyr)
 library(dplyr)
 library(ggplot2)
-install.packages("maps")
 library(maps)
 library(usmap)
 ```
@@ -83,7 +82,6 @@ data22$State[data22$State=="Washington(6)"] <-"Washington"
 data22$State[data22$State=="Wyoming(5)"] <-"Wyoming"
 head(data22)
 ```
-
 
 ### Driving Population for Year 2020
 
@@ -165,21 +163,33 @@ ggplot((data = fd), aes(x = State, y = Fatalities_Rate, fill = Years)) +
 ```
 
 ```{r}
+states <- map_data("state")
+counties <- map_data("county")
+usa <- subset(states)
+head(usa)
+```
+
+```{r}
+fd <- Fatalitydata %>% as.data.frame() %>% rownames_to_column("state")
+fd$State <- tolower(fd$State)
+```
+
+```{r}
 ggplot(fd, aes(map_id = State)) + geom_map(aes(fill = Y22), map = states) +
   expand_limits(x = states$long, y = states$lat) +
-  scale_fill_gradient(low = "white", high = "orange") +
+  scale_fill_gradient(low = "white", high = "blue") +
   labs(title = "Fatal Accidents Per State, 2022", x = "longitude", y = "latitude") +
   coord_fixed(1.3) +
   theme(panel.background = element_blank())
 ggplot(fd, aes(map_id = State)) + geom_map(aes(fill = Y20), map = states) +
   expand_limits(x = states$long, y = states$lat) +
-  scale_fill_gradient(low = "white", high = "red") +
+  scale_fill_gradient(low = "white", high = "green") +
   labs(title = "Fatal Accidents Per State, 2020", x = "longitude", y = "latitude") +
   coord_fixed(1.3) +
   theme(panel.background = element_blank())
 ggplot(fd, aes(map_id = State)) + geom_map(aes(fill = Y18), map = states) +
   expand_limits(x = states$long, y = states$lat) +
-  scale_fill_gradient(low = "white", high = "blue") +
+  scale_fill_gradient(low = "white", high = "red") +
   labs(title = "Fatal Accidents Per State, 2018", x = "longitude", y = "latitude") +
   coord_fixed(1.3) +
   theme(panel.background = element_blank())
