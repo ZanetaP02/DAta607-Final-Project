@@ -15,7 +15,7 @@ library(usmap)
 ```
 
 ### Introduction: 
-We will examine the relationship between the number of drivers and the incidence of fatal accidents in the USA. Our focus will be on fatality data from the National Highway Traffic Safety Administration and driving population statistics from the Federal Highway Administration for the years 2018, 2020, and 2022. Our analysis will investigate whether the number of fatalities increases as the driving population grows. I believe that an increase in the number of drivers is likely to lead to an increase in the number of fatalities as well.
+We will examine the relationship between the number of drivers and the incidence of fatal accidents in the USA. Our focus will be on fatality data from the National Highway Traffic Safety Administration and driving population statistics from the Federal Highway Administration for the years 2018, 2020, and 2022. Our analysis will investigate whether the number of fatalities increases as the driving population grows. We believe that an increase in the number of drivers is likely to lead to an increase in the number of fatalities as well.
 
 ### Data Source 
 Data of fatal accidents per state 
