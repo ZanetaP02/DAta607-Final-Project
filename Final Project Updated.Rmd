@@ -195,13 +195,23 @@ ggplot(fd, aes(map_id = State)) + geom_map(aes(fill = Y18), map = states) +
   coord_fixed(1.3) +
   theme(panel.background = element_blank())
 ```
+
+### Top 3 High Fatalities States
+```{r}
+fd %>% top_n(3)
+```
+### Top 3 Low Fatalities States
+```{r}
+fd %>% top_n(-3)
+```
+
 This graph provides a clear visual representation of fatalities rates across states and years, allowing for comparisons and analysis of trends.
 
 The graph effectively visualizes traffic fatalities across US states for 2018, 2020, and 2022, highlighting significant variations between populous states like California, Texas, and Florida compared to smaller states.
 
 Key Observations:
  - High Fatalities States: California, Florida, and Texas consistently have the highest fatalities rates.
- - Low Fatalities States: Vermont, Wyoming, and Rhode Island have the lowest rates.
+ - Low Fatalities States: Vermont, 	District of Columbia, and Rhode Island have the lowest rates.
  - Yearly Changes: While some states show slight increases or decreases, the overall trend varies by state.
 
 ### Graph of Drivers Population
