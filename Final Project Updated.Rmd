@@ -45,9 +45,26 @@ head(Fatalitydata)
 ```
 
 ```{r}
- Fatalitydata$State[Fatalitydata$State=="District of Columbia"] <-"Dist. of Col."
-Fatalitydata
+ggplot(fd, aes(map_id = State)) + geom_map(aes(fill = Y22), map = states) +
+  expand_limits(x = states$long, y = states$lat) +
+  scale_fill_gradient(low = "white", high = "orange") +
+  labs(title = "Fatal Accidents Per State, 2022", x = "longitude", y = "latitude") +
+  coord_fixed(1.3) +
+  theme(panel.background = element_blank())
+ggplot(fd, aes(map_id = State)) + geom_map(aes(fill = Y20), map = states) +
+  expand_limits(x = states$long, y = states$lat) +
+  scale_fill_gradient(low = "white", high = "red") +
+  labs(title = "Fatal Accidents Per State, 2020", x = "longitude", y = "latitude") +
+  coord_fixed(1.3) +
+  theme(panel.background = element_blank())
+ggplot(fd, aes(map_id = State)) + geom_map(aes(fill = Y18), map = states) +
+  expand_limits(x = states$long, y = states$lat) +
+  scale_fill_gradient(low = "white", high = "blue") +
+  labs(title = "Fatal Accidents Per State, 2018", x = "longitude", y = "latitude") +
+  coord_fixed(1.3) +
+  theme(panel.background = element_blank())
 ```
+
 
 
 ### Driving Population for Year 2022
@@ -70,7 +87,7 @@ Remove fotenote from State
 data22$State[data22$State=="Alaska(2)"] <-"Alaska"
 data22$State[data22$State=="Arkansas(4)"] <-"Arkansas"
 data22$State[data22$State=="Connecticut(7)"] <-"Connecticut"
-data22$State[data22$State=="Dist. of Col.(4)"] <-"Dist. of Col."
+data22$State[data22$State=="Dist. of Col.(4)"] <-"District of Columbia"
 data22$State[data22$State=="Colorado(6)"] <-"Colorado"
 data22$State[data22$State=="Hawaii(7)"] <-"Hawaii"
 data22$State[data22$State=="Iowa(5)"] <-"Iowa"
@@ -104,6 +121,7 @@ head(data20)
 
 ```{r}
 data20$State[data20$State=="Arkansas(5)"] <-"Arkansas"
+data20$State[data20$State=="Dist. of Col."] <-"District of Columbia"
 data20$State[data20$State=="New York(5)"] <-"New York"
 head(data20)
 ```
@@ -124,6 +142,7 @@ data18
 
 ```{r}
 data18$State[data18$State=="Alaska2/"] <-"Alaska"
+data20$State[data20$State=="Dist. of Col."] <-"District of Columbia"
 data18$State[data18$State=="Illinois2/"] <-"Illinois"
 data18
 ```
