@@ -242,6 +242,21 @@ ggplot(data = dp, aes(x = State, y = Drivers_Population, fill = Total_Drivers_Pe
   labs(y = "Drivers Population")
 ```
 
+```{r}
+year_pop <- read.csv("https://raw.githubusercontent.com/ZanetaP02/DAta607-Final-Project/refs/heads/main/year_pop.csv")
+head(year_pop)
+```
+
+### Top 3 High Driver Population States
+```{r}
+year_pop %>% top_n(3)
+```
+
+### Top 3 Low Driver Population States
+```{r}
+year_pop %>% top_n(-3)
+```
+
 This is a bar graph showing "Drivers Population for the Years 2018, 2020, & 2022" across different U.S. states. Here are the key observations:
 
 Key Observations:
