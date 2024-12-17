@@ -227,11 +227,6 @@ Key Observations:
 ### Graph of Drivers Population
 
 ```{r}
-dpop <- read.csv("https://raw.githubusercontent.com/ZanetaP02/DAta607-Final-Project/refs/heads/main/dpop.csv")
-head(dpop)
-```
-
-```{r}
 dp <- df_pop %>%
   pivot_longer(cols = c('Total_Drivers_Y22', 'Total_Drivers_Y20', 'Total_Drivers_Y18'), names_to = "Total_Drivers_Per_Years", values_to = "Drivers_Population") %>%
   mutate(Total_Drivers_Per_Years = recode(Total_Drivers_Per_Years,
