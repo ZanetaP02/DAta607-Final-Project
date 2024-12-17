@@ -119,7 +119,7 @@ data18
 
 ```{r}
 data18$State[data18$State=="Alaska2/"] <-"Alaska"
-data20$State[data20$State=="Dist. of Col."] <-"District of Columbia"
+data18$State[data18$State=="Dist. of Col."] <-"District of Columbia"
 data18$State[data18$State=="Illinois2/"] <-"Illinois"
 data18
 ```
@@ -136,8 +136,6 @@ df_pop <- Reduce(merge,list(df18,df20,df22))
 names(df_pop) <- c("State", "Y18", "Y20", "Y22")
 df_pop
 ```
-
-
 
 
 ```{r}
