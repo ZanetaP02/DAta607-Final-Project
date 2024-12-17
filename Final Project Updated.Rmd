@@ -1,7 +1,9 @@
 ---
 title: "Data 607 Final Project Proposal"
 author: "Zaneta Paulusova & Inna Yedzinovich"
-output: powerpoint_presentation
+output:
+  html_document:
+    df_print: paged
 ---
 
 ```{r}
