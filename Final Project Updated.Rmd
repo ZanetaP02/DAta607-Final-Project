@@ -215,6 +215,25 @@ fd %>% top_n(3)
 fd %>% top_n(-3)
 ```
 
+###Remove Commas 
+```{r}
+fd_pop$Total_Drivers_Y22 <- as.numeric(gsub(",", "", df_pop$Total_Drivers_Y22))
+fd_pop$Total_Drivers_Y20 <- as.numeric(gsub(",", "", df_pop$Total_Drivers_Y20))
+fd_pop$Total_Drivers_Y18 <- as.numeric(gsub(",", "", df_pop$Total_Drivers_Y18))
+fd_pop
+```
+
+
+### Top 3 High Driver Population States
+```{r}
+fd_pop %>% top_n(3)
+```
+
+### Top 3 Low Driver Population States
+```{r}
+fd_pop %>% top_n(-3)
+```
+
 This graph provides a clear visual representation of fatalities rates across states and years, allowing for comparisons and analysis of trends.
 
 The graph effectively visualizes traffic fatalities across US states for 2018, 2020, and 2022 and the tables of High and Low Fatalities States highlighting significant variations between populous states like California, Texas, and Florida compared to smaller states.
