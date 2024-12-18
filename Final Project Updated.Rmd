@@ -133,14 +133,14 @@ df20 <- data20[, c("State", "Total_Drivers_Y20")]
 df18 <- data18[, c("State", "Total_Drivers_Y18")]
 
 df_pop <- Reduce(merge,list(df22,df20,df18))
-df_pop
+head(df_pop)
 
 ```
 
 ```{r}
 dp <- df_pop %>%
   pivot_longer(cols = c('Total_Drivers_Y22', 'Total_Drivers_Y20', 'Total_Drivers_Y18'), names_to = "Total_Drivers_Per_Years", values_to = "Drivers_Population")
-dp
+head(dp)
 ```
 
 
