@@ -258,12 +258,12 @@ ggplot(data = df_p, aes(x = State, y = Drivers_Population, fill = Total_Drivers_
 
 ### Top 3 High Driver Population States
 ```{r}
-year_pop %>% top_n(3)
+df_pop %>% top_n(3)
 ```
 
 ### Top 3 Low Driver Population States
 ```{r}
-year_pop %>% top_n(-3)
+df_pop %>% top_n(-3)
 ```
 
 The bar graph "Drivers Population for the Years 2018, 2020, & 2022" shows driver population across different U.S. states and the tables of the hist and lows State Driver Population. Here are the key observations:
