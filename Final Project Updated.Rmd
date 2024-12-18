@@ -119,7 +119,7 @@ data18
 
 ```{r}
 data18$State[data18$State=="Alaska2/"] <-"Alaska"
-data20$State[data20$State=="Dist. of Col."] <-"District of Columbia"
+data18$State[data18$State=="Dist. of Col."] <-"District of Columbia"
 data18$State[data18$State=="Illinois2/"] <-"Illinois"
 data18
 ```
