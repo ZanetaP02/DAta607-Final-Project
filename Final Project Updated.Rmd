@@ -132,15 +132,14 @@ df22 <- data22[, c("State", "Total_Drivers_Y22")]
 df20 <- data20[, c("State", "Total_Drivers_Y20")]
 df18 <- data18[, c("State", "Total_Drivers_Y18")]
 
-df_pop <- Reduce(merge,list(df22,df20,df18))
-fd_pop <- Reduce(merge,list(df22,df20,df18))
+df_pop <- Reduce(merge,list(df18,df20,df22))
+fd_pop <- Reduce(merge,list(df18,df20,df22))
 head(df_pop)
-
 ```
 
 ```{r}
 dp <- df_pop %>%
-  pivot_longer(cols = c('Total_Drivers_Y22', 'Total_Drivers_Y20', 'Total_Drivers_Y18'), names_to = "Total_Drivers_Per_Years", values_to = "Drivers_Population")
+  pivot_longer(cols = c('Total_Drivers_Y18', Total_Drivers_Y20', Total_Drivers_Y22'), names_to = "Total_Drivers_Per_Years", values_to = "Drivers_Population")
 head(dp)
 ```
 
@@ -221,15 +220,18 @@ This graph provides a clear visual representation of fatalities rates across sta
 The graph effectively visualizes traffic fatalities across US states for 2018, 2020, and 2022 and the tables of High and Low Fatalities States highlighting significant variations between populous states like California, Texas, and Florida compared to smaller states.
 
 Key Observations:
+
  - High Fatalities States: California, Florida, and Texas consistently have the highest fatalities rates.
+
  - Low Fatalities States: Vermont, District of Columbia, and Rhode Island have the lowest rates.
+
  - Yearly Changes: While some states show slight increases or decreases, the overall trend varies by state.
 
 ### Graph of Drivers Population
 
 ```{r}
 dp <- df_pop %>%
-  pivot_longer(cols = c('Total_Drivers_Y22', 'Total_Drivers_Y20', 'Total_Drivers_Y18'), names_to = "Total_Drivers_Per_Years", values_to = "Drivers_Population") 
+  pivot_longer(cols = c('Total_Drivers_Y18', 'Total_Drivers_Y20', 'Total_Drivers_Y22'), names_to = "Total_Drivers_Per_Years", values_to = "Drivers_Population") 
 head(dp)
 ggplot(data = dp, aes(x = State, y = Drivers_Population, fill = Total_Drivers_Per_Years)) + 
   geom_col(position = position_dodge()) + 
@@ -240,11 +242,11 @@ ggplot(data = dp, aes(x = State, y = Drivers_Population, fill = Total_Drivers_Pe
 
 ```{r}
 df_p <- df_pop %>%
-  pivot_longer(cols = c('Total_Drivers_Y22', 'Total_Drivers_Y20', 'Total_Drivers_Y18'), names_to = "Total_Drivers_Per_Years", values_to = "Drivers_Population") %>%
+  pivot_longer(cols = c('Total_Drivers_Y18', 'Total_Drivers_Y20', 'Total_Drivers_Y22'), names_to = "Total_Drivers_Per_Years", values_to = "Drivers_Population") %>%
   mutate(Total_Drivers_Per_Years = recode(Total_Drivers_Per_Years,
-                                          "Total_Drivers_Y22" = "2022",
+                                          "Total_Drivers_Y18" = "2018",
                                           "Total_Drivers_Y20" = "2020",
-                                          "Total_Drivers_Y18" = "2018"),
+                                          "Total_Drivers_Y22" = "2022"),
          Drivers_Population = as.numeric(gsub("[^0-9]", "", Drivers_Population)))
 
 ggplot(data = df_p, aes(x = State, y = Drivers_Population, fill = Total_Drivers_Per_Years)) + 
@@ -280,9 +282,9 @@ Key Observations:
 
 
 ## Conclusion 
-Data collected indicates that states with high driver populations tend to have high fatal accident rates, and this trend is similar for states with the lowest driver populations.
+Analysis of the collected data shows a relationship between states with high driver populations and high fatal accident rates, similar to the trend observed in states with low driver populations.
 
-We can also examine the relationship between the number of drivers and the incidence of fatal accidents in the USA, we can set up the null and alternative hypotheses: 
+To better examinethe relationship between the number of drivers and the incidence of fatal accidents in the USA, we can set up the null and alternative hypotheses: 
 
 Null Hypothesis (H0): There is no relationship between the number of drivers and the incidence of fatal accidents.
 Alternative Hypothesis (H1): There is a positive relationship between the number of drivers and the incidence of fatal accidents.
@@ -300,11 +302,11 @@ head(fd)
 # Pivot the df_pop dataframe
 head(dp)
 dp <- df_pop %>%
-  pivot_longer(cols = c('Total_Drivers_Y22', 'Total_Drivers_Y20', 'Total_Drivers_Y18'), names_to = "Total_Drivers_Per_Years", values_to = "Drivers_Population") %>%
+  pivot_longer(cols = c(''Total_Drivers_Y18', 'Total_Drivers_Y20', 'Total_Drivers_Y22'), names_to = "Total_Drivers_Per_Years", values_to = "Drivers_Population") %>%
   mutate(Total_Drivers_Per_Years = recode(Total_Drivers_Per_Years,
-                                          "Total_Drivers_Y22" = "2022",
+                                          "Total_Drivers_Y18" = "2018",
                                           "Total_Drivers_Y20" = "2020",
-                                          "Total_Drivers_Y18" = "2018"),
+                                          "Total_Drivers_Y22" = "2022"),
          Drivers_Population = as.numeric(gsub("[^0-9]", "", Drivers_Population)))
 head(dp)
 fd$State <- tolower(fd$State)
