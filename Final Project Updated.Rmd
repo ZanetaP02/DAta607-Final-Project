@@ -217,7 +217,7 @@ fd %>% top_n(-3)
 
 This graph provides a clear visual representation of fatalities rates across states and years, allowing for comparisons and analysis of trends.
 
-The graph effectively visualizes traffic fatalities across US states for 2018, 2020, and 2022, highlighting significant variations between populous states like California, Texas, and Florida compared to smaller states.
+The graph effectively visualizes traffic fatalities across US states for 2018, 2020, and 2022 and the tables of High and Low Fatalities States highlighting significant variations between populous states like California, Texas, and Florida compared to smaller states.
 
 Key Observations:
  - High Fatalities States: California, Florida, and Texas consistently have the highest fatalities rates.
@@ -228,13 +228,8 @@ Key Observations:
 
 ```{r}
 dp <- df_pop %>%
-  pivot_longer(cols = c('Total_Drivers_Y22', 'Total_Drivers_Y20', 'Total_Drivers_Y18'), names_to = "Total_Drivers_Per_Years", values_to = "Drivers_Population") %>%
-  mutate(Total_Drivers_Per_Years = recode(Total_Drivers_Per_Years,
-                                          "Total_Drivers_Y22" = "2022",
-                                          "Total_Drivers_Y20" = "2020",
-                                          "Total_Drivers_Y18" = "2018"),
-         Drivers_Population = as.numeric(gsub("[^0-9]", "", Drivers_Population)))
-
+  pivot_longer(cols = c('Total_Drivers_Y22', 'Total_Drivers_Y20', 'Total_Drivers_Y18'), names_to = "Total_Drivers_Per_Years", values_to = "Drivers_Population") 
+head(dp)
 ggplot(data = dp, aes(x = State, y = Drivers_Population, fill = Total_Drivers_Per_Years)) + 
   geom_col(position = position_dodge()) + 
   ggtitle("Graph of Drivers Population") +
@@ -243,8 +238,19 @@ ggplot(data = dp, aes(x = State, y = Drivers_Population, fill = Total_Drivers_Pe
 ```
 
 ```{r}
-year_pop <- read.csv("https://raw.githubusercontent.com/ZanetaP02/DAta607-Final-Project/refs/heads/main/year_pop.csv")
-head(year_pop)
+df_p <- df_pop %>%
+  pivot_longer(cols = c('Total_Drivers_Y22', 'Total_Drivers_Y20', 'Total_Drivers_Y18'), names_to = "Total_Drivers_Per_Years", values_to = "Drivers_Population") %>%
+  mutate(Total_Drivers_Per_Years = recode(Total_Drivers_Per_Years,
+                                          "Total_Drivers_Y22" = "2022",
+                                          "Total_Drivers_Y20" = "2020",
+                                          "Total_Drivers_Y18" = "2018"),
+         Drivers_Population = as.numeric(gsub("[^0-9]", "", Drivers_Population)))
+
+ggplot(data = df_p, aes(x = State, y = Drivers_Population, fill = Total_Drivers_Per_Years)) + 
+  geom_col(position = position_dodge()) + 
+  ggtitle("Graph of Drivers Population") +
+  theme(axis.text.x = element_text(angle = 66, hjust = 1)) +
+  labs(y = "Drivers Population")
 ```
 
 ### Top 3 High Driver Population States
