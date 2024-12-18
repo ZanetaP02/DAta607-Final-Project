@@ -340,7 +340,7 @@ head(fd)
 # Pivot the df_pop dataframe
 head(dp)
 dp <- df_pop %>%
-  pivot_longer(cols = c(''Total_Drivers_Y18', 'Total_Drivers_Y20', 'Total_Drivers_Y22'), names_to = "Total_Drivers_Per_Years", values_to = "Drivers_Population") %>%
+  pivot_longer(cols = c('Total_Drivers_Y18', 'Total_Drivers_Y20', 'Total_Drivers_Y22'), names_to = "Total_Drivers_Per_Years", values_to = "Drivers_Population") %>%
   mutate(Total_Drivers_Per_Years = recode(Total_Drivers_Per_Years,
                                           "Total_Drivers_Y18" = "2018",
                                           "Total_Drivers_Y20" = "2020",
