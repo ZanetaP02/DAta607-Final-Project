@@ -221,7 +221,7 @@ The graph effectively visualizes traffic fatalities across US states for 2018, 2
 
 Key Observations:
  - High Fatalities States: California, Florida, and Texas consistently have the highest fatalities rates.
- - Low Fatalities States: Vermont,	District of Columbia, and Rhode Island have the lowest rates.
+ - Low Fatalities States: Vermont, District of Columbia, and Rhode Island have the lowest rates.
  - Yearly Changes: While some states show slight increases or decreases, the overall trend varies by state.
 
 ### Graph of Drivers Population
@@ -263,17 +263,19 @@ year_pop %>% top_n(3)
 year_pop %>% top_n(-3)
 ```
 
-This is a bar graph showing "Drivers Population for the Years 2018, 2020, & 2022" across different U.S. states. Here are the key observations:
+The bar graph "Drivers Population for the Years 2018, 2020, & 2022" shows driver population across different U.S. states and the tables of the hist and lows State Driver Population. Here are the key observations:
 
 Key Observations:
  - The largest populations are around 27 million drivers
  - The smallest populations appear to be less than 1 million drivers
  - Most states fall in the range of 2-8 million drivers
- 
+ - High Driver Population States: California, Florida, and Texas consistently have the highest fatalities rates.
+ - Low Driver Population States: Vermont, District of Columbia, and Wyoming have the lowest rates.
  
 ## Conclusion 
+Data collected indicates that states with high driver populations tend to have high fatal accident rates, and this trend is similar for states with the lowest driver populations.
 
-To examine the relationship between the number of drivers and the incidence of fatal accidents in the USA, we can set up the null and alternative hypotheses: 
+We can also examine the relationship between the number of drivers and the incidence of fatal accidents in the USA, we can set up the null and alternative hypotheses: 
 
 Null Hypothesis (H0): There is no relationship between the number of drivers and the incidence of fatal accidents.
 Alternative Hypothesis (H1): There is a positive relationship between the number of drivers and the incidence of fatal accidents.
