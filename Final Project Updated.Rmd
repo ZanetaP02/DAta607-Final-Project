@@ -285,7 +285,26 @@ df_pop %>% top_n(3)
 df_pop %>% top_n(-3)
 ```
 
-The bar graph "Drivers Population for the Years 2018, 2020, & 2022" shows driver population across different U.S. states and the tables of the hist and lows State Driver Population. Here are the key observations:
+### Remove Commase
+```{r}
+fd_pop$Total_Drivers_Y22 <- as.numeric(gsub(",", "", df_pop$Total_Drivers_Y22))
+fd_pop$Total_Drivers_Y20 <- as.numeric(gsub(",", "", df_pop$Total_Drivers_Y20))
+fd_pop$Total_Drivers_Y18 <- as.numeric(gsub(",", "", df_pop$Total_Drivers_Y18))
+fd_pop
+```
+
+
+### Top 3 High Driver Population States
+```{r}
+fd_pop %>% top_n(3)
+```
+
+### Top 3 Low Driver Population States
+```{r}
+fd_pop %>% top_n(-3)
+```
+
+The bar graph "Drivers Population for the Years 2018, 2020, & 2022" shows driver population across different U.S. states and the tables of the highs and lows State Driver Population. Here are the key observations:
 
 Key Observations:
 
