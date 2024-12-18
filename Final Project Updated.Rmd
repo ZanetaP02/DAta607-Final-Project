@@ -133,6 +133,7 @@ df20 <- data20[, c("State", "Total_Drivers_Y20")]
 df18 <- data18[, c("State", "Total_Drivers_Y18")]
 
 df_pop <- Reduce(merge,list(df22,df20,df18))
+fd_pop <- Reduce(merge,list(df22,df20,df18))
 head(df_pop)
 
 ```
@@ -266,12 +267,18 @@ year_pop %>% top_n(-3)
 The bar graph "Drivers Population for the Years 2018, 2020, & 2022" shows driver population across different U.S. states and the tables of the hist and lows State Driver Population. Here are the key observations:
 
 Key Observations:
+
  - The largest populations are around 27 million drivers
+
  - The smallest populations appear to be less than 1 million drivers
+
  - Most states fall in the range of 2-8 million drivers
+
  - High Driver Population States: California, Florida, and Texas consistently have the highest fatalities rates.
+
  - Low Driver Population States: Vermont, District of Columbia, and Wyoming have the lowest rates.
- 
+
+
 ## Conclusion 
 Data collected indicates that states with high driver populations tend to have high fatal accident rates, and this trend is similar for states with the lowest driver populations.
 
