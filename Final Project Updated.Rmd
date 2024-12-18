@@ -1,5 +1,5 @@
 ---
-title: "Data 607 Final Project Proposal"
+title: "Data 607 Final Project"
 author: "Zaneta Paulusova & Inna Yedzinovich"
 output:
   html_document:
