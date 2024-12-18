@@ -131,6 +131,7 @@ df20 <- data20[, c("State", "Total_Drivers_Y20")]
 df18 <- data18[, c("State", "Total_Drivers_Y18")]
 
 df_pop <- Reduce(merge,list(df18,df20,df22))
+fd_pop <- Reduce(merge,list(df18,df20,df22))
 names(df_pop) <- c("State", "Y18", "Y20", "Y22")
 df_pop
 ```
@@ -221,6 +222,7 @@ Key Observations:
  - Low Fatalities States: Vermont,	District of Columbia, and Rhode Island have the lowest rates.
  - Yearly Changes: While some states show slight increases or decreases, the overall trend varies by state.
 
+
 ### Graph of Drivers Population
 ```{r}
 ggplot(data = dp, aes(x = State, y = Drivers_Population, fill = Years)) + 
@@ -246,19 +248,15 @@ ggplot(data = df, aes(x = State, y = Drivers_Population, fill = Years)) +
   labs(y = "Drivers Population")
 ```
 
-```{r}
-year_pop <- read.csv("https://raw.githubusercontent.com/ZanetaP02/DAta607-Final-Project/refs/heads/main/year_pop.csv")
-head(year_pop)
-```
 
 ### Top 3 High Driver Population States
 ```{r}
-year_pop %>% top_n(3)
+df_pop %>% top_n(3)
 ```
 
 ### Top 3 Low Driver Population States
 ```{r}
-year_pop %>% top_n(-3)
+df_pop %>% top_n(-3)
 ```
 
 This is a bar graph showing "Drivers Population for the Years 2018, 2020, & 2022" across different U.S. states. Here are the key observations:
