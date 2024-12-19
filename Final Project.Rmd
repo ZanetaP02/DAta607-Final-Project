@@ -176,7 +176,6 @@ head(fd)
 ```
 
 ```{r}
-head(fd)
 fd_long <- fd %>%
   pivot_longer(cols = starts_with("Y"), names_to = "Year", values_to = "Fatalities_Rate")
 head(fd_long)
@@ -215,7 +214,7 @@ fd %>% top_n(3)
 fd %>% top_n(-3)
 ```
 
-###Remove Commas 
+### Remove Commas 
 ```{r}
 fd_pop$Total_Drivers_Y22 <- as.numeric(gsub(",", "", df_pop$Total_Drivers_Y22))
 fd_pop$Total_Drivers_Y20 <- as.numeric(gsub(",", "", df_pop$Total_Drivers_Y20))
